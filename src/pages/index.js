@@ -1,5 +1,5 @@
 "use client";
-
+import axios from "axios";
 import Head from "next/head";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from "@/services/firebaseConfig";
@@ -9,15 +9,17 @@ import { useState } from "react";
 export default function Home() {
   const [inputValue, setInputValue] = useState("");
 
-  const handleInput = async (e) => {
-    setInputValue(e.target.value);
+  const handleInputSubmit = async (e) => {
     try {
-      const response = await fetch("/services/process-input", {
+      const obj = {
+        message: inputValue,
+      };
+      const response = await fetch("/api/process-input", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ input }),
+        body: JSON.stringify({ obj }),
       });
       if (response.ok) {
         console.log("saved");
@@ -29,6 +31,17 @@ export default function Home() {
       }
     } catch (error) {
       console.error("Error:", error);
+    }
+  };
+
+  const handleInput = (e) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleInputSubmit();
     }
   };
 
@@ -68,7 +81,13 @@ export default function Home() {
         </button>
       </div>
       <div>
-        <input type="text" value={inputValue} onInput={handleInput}></input>
+        <input
+          type="text"
+          value={inputValue}
+          onChange={handleInput}
+          onKeyDown={handleKeyPress}
+          placeholder="Enter Details to Get Started"
+        ></input>
         <p> You Entered : {inputValue} </p>
         <Typewriter></Typewriter>
       </div>

@@ -1,14 +1,22 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
-const config = {
-  apiKey: "AIzaSyAtW2JqDwIfQHjiYK6A_1Hlo5LOpVFtvcc",
-  authDomain: "cally-38fdc.firebaseapp.com",
-  projectId: "cally-38fdc",
-  storageBucket: "cally-38fdc.appspot.com",
-  messagingSenderId: "474777992654",
-  appId: "1:474777992654:web:a8521e37f8dbdc0cc63f9f",
-  measurementId: "G-KN8PN0DFEH",
+const apiKey = process.env.FB_APIKEY;
+const authDomain = process.env.FB_AUTHDOMAIN;
+const projectId = process.env.FB_PROJECTID;
+const storageBucket = process.env.FB_STORAGE_BUCKET;
+const messagingSenderId = process.env.FB_MESSAGING_SENDERID;
+const appId = process.env.FB_APPID;
+const measurementId = process.env.FB_MEASUREMENT_ID;
+
+const firebaseConfig = {
+  apiKey: apiKey,
+  authDomain: authDomain,
+  projectId: projectId,
+  storageBucket: storageBucket,
+  messagingSenderId: messagingSenderId,
+  appId: appId,
+  measurementId: measurementId,
 };
 
 // Initialize Firebase
