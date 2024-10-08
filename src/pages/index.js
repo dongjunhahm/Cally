@@ -26,6 +26,8 @@ export default function Home() {
       eventDetails,
       token: userToken,
     });
+
+    console.log(newApiResponse);
   };
 
   const handleInput = (e) => {
