@@ -1,37 +1,32 @@
 "use client";
 import axios from "axios";
 import Head from "next/head";
-import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { auth } from "@/services/firebaseConfig";
 import { Typewriter } from "../components/typewriter";
 import { useState } from "react";
+import { googleSignIn } from "../services/googleLogin";
 
 export default function Home() {
   const [inputValue, setInputValue] = useState("");
+  const [userToken, setUserToken] = useState("");
 
-  const handleInputSubmit = async (e) => {
-    try {
-      const obj = {
-        message: inputValue,
-      };
-      const response = await fetch("/api/process-input", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ obj }),
-      });
-      if (response.ok) {
-        console.log("saved");
-        const eventDetails = await response.json();
-        console.log(eventDetails);
-        setInputValue("");
-      } else {
-        console.error("Error processing input", response.statusText);
-      }
-    } catch (error) {
-      console.error("Error:", error);
+  const handleSubmit = async (e) => {
+    console.log(inputValue);
+    const response = await axios.post("/api/process-input", {
+      input: inputValue,
+    });
+    console.log("full response", response.data);
+    const eventDetails = response.data.gptResponse;
+    if (response.status === 200) {
+      console.log("Response was successful and status code is 200.");
+      console.log("Data looks like: " + eventDetails);
     }
+
+    console.log("we are so back", userToken);
+
+    const newApiResponse = await axios.post("/api/create-event", {
+      eventDetails,
+      token: userToken,
+    });
   };
 
   const handleInput = (e) => {
@@ -41,35 +36,17 @@ export default function Home() {
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      handleInputSubmit();
+      handleSubmit();
     }
   };
 
   const handleGoogle = async (e) => {
-    const provider = new GoogleAuthProvider();
+    const result = await googleSignIn();
 
-    try {
-      const result = await signInWithPopup(auth, provider);
-
-      const credential = GoogleAuthProvider.credentialFromResult(result);
-      const token = credential.accessToken;
-
-      const user = result.user;
-
-      console.log("user info", user);
-      console.log("Access Token:", token);
-    } catch (error) {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // The email of the user's account used
-      const email = error.customData.email;
-      // The AuthCredential type that was used
-      const credential = GoogleAuthProvider.credentialFromError(error);
-
-      console.error("Error Code:", errorCode);
-      console.error("Error Message:", errorMessage);
-      console.error("Email:", email);
-      console.error("Credential:", credential);
+    if (result) {
+      const { token } = result;
+      console.log(token);
+      setUserToken(token);
     }
   };
 
