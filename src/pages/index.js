@@ -1,6 +1,5 @@
 "use client";
 import axios from "axios";
-import Head from "next/head";
 import { Typewriter } from "../components/typewriter";
 import { useState } from "react";
 import { googleSignIn } from "../services/googleLogin";
@@ -9,7 +8,7 @@ export default function Home() {
   const [inputValue, setInputValue] = useState("");
   const [userToken, setUserToken] = useState("");
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async () => {
     console.log(inputValue);
     const response = await axios.post("/api/process-input", {
       input: inputValue,
@@ -40,7 +39,7 @@ export default function Home() {
     }
   };
 
-  const handleGoogle = async (e) => {
+  const handleGoogle = async () => {
     const result = await googleSignIn();
 
     if (result) {
