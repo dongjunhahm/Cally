@@ -2,7 +2,7 @@
 import axios from "axios";
 import { Typewriter } from "../components/typewriter";
 import { useState } from "react";
-import { googleSignIn } from "../services/googleLogin";
+import { googleSignIn } from "../pages/api/googleLogin";
 
 export default function Home() {
   const [inputValue, setInputValue] = useState("");
