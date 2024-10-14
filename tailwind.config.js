@@ -13,7 +13,8 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    require('daisyui'),
-  ],
-}
+  plugins: [require("daisyui")],
+  images: {
+    domains: ["www.google.com"],
+  },
+};

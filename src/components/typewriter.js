@@ -46,7 +46,7 @@ export const Typewriter = () => {
   return (
     <>
       <div className="inline-block">
-        <p className="inter text-black inline relative mr-5 font-normal text-sm">
+        <p className="inter text-gray-700 inline relative mr-5 font-normal text-sm">
           {exampleInput[index].substring(0, subIndex)}
           <span
             className={`absolute right-0 bottom-0 w-5 h-1font-bold ${
