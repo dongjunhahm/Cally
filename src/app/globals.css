@@ -1,25 +1,29 @@
+/* Import Tailwind CSS layers */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Define custom CSS variables for light and dark mode */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #ffffff; /* Light mode background */
+  --foreground: #171717; /* Light mode text color */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #0a0a0a; /* Dark mode background */
+    --foreground: #ededed; /* Dark mode text color */
   }
 }
 
+/* Apply global styles for body */
 body {
   color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--background);
+  font-family: Arial, Helvetica, sans-serif; /* Fallback font until Tailwind loads */
 }
 
+/* Custom Tailwind utility class extension */
 @layer utilities {
   .text-balance {
     text-wrap: balance;

@@ -13,7 +13,7 @@ export default async function handler(req, res) {
         .status(500)
         .json({ error: "There wasn't an input attached with the request." });
     }
-
+    const currentDate = new Date();
     console.log("input recieved", input);
     const response = await axios.post(
       "https://api.openai.com/v1/chat/completions",
@@ -22,7 +22,7 @@ export default async function handler(req, res) {
         messages: [
           {
             role: "system",
-            content: `Format the response as JSON attributes: { summary: event_name, location: location || "", description: guests ? Guests: {guests.join(", ")} : "", start: { dateTime: time || new Date().toISOString(), timezone: "PST" }, end: { dateTime: time ? new Date(new Date(time).getTime() + 60 * 60 * 1000).toISOString() : new Date(new Date().getTime() + 60 * 60 * 1000).toISOString(), timezone: "PST" }}`,
+            content: `The current date is ${currentDate}. Format the response as JSON attributes: { summary: event_name, location: location || "", description: guests ? Guests: {guests.join(", ")} : "", start: { dateTime: time || new Date().toISOString(), timezone: "PST" }, end: { dateTime: time ? new Date(new Date(time).getTime() + 60 * 60 * 1000).toISOString() : new Date(new Date().getTime() + 60 * 60 * 1000).toISOString(), timezone: "PST".}} Assume any mentions of date are either for the current day, or future dates. So an input such as 'this friday' will be for the soonest future occurence of friday, and a date with no mention of year will be the soonest future occurence of that date.`,
           },
           {
             role: "assistant",

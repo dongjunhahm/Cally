@@ -3,6 +3,7 @@ import axios from "axios";
 import { Typewriter } from "../components/typewriter";
 import { useState } from "react";
 import { googleSignIn } from "../pages/api/googleLogin";
+import "../app/globals.css"
 
 export default function Home() {
   const [inputValue, setInputValue] = useState("");
@@ -54,7 +55,7 @@ export default function Home() {
   return (
     <>
       <div>
-        <button onClick={handleGoogle} className="btn btn-outline btn-success">
+        <button onClick={handleGoogle} className="btn btn-primary btn-square">
           Login
         </button>
       </div>
