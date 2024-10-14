@@ -56,6 +56,7 @@ const Home = () => {
       eventDetails,
       token: userToken,
     });
+    console.log(newApiResponse);
 
     setShowSuccess(true);
     setAnimationState("grow");
